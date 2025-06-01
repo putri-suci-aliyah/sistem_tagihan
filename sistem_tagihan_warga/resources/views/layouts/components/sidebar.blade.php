@@ -16,7 +16,7 @@
         </div>
 
         <!-- SidebarSearch Form -->
-        <div class="form-inline">
+        {{-- <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
                 <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
@@ -25,14 +25,14 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
@@ -86,8 +86,57 @@
                             LOGOUT
                         </p>
                     </a>
+                </li> --}}
+
+                <li class="nav-header">MASTER DATA</li>
+                <li class="nav-item">
+                            <a href="penduduk" class="nav-link">
+                                <i class="nav-icon fas fa-file"></i>
+                                <p>PENDUDUK</p>
+                            </a>
+                </li>
+                <li class="nav-item">
+                            <a href="tagihan" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Tagihan</p>
+                            </a>
+                </li>
+                <li class="nav-item">
+                            <a href="user" class="nav-link">
+                                <i class="nav-icon far fa-user"></i>
+                                <p>User</p>
+                            </a>
                 </li>
 
+                <li class="nav-header">TRANSAKSI</li>
+                <li class="nav-item">
+                            <a href="widgets.html" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>Transaksi Tagihan</p>
+                            </a>
+                </li>
+
+                <li class="nav-header">LAPORAN</li>
+                <li class="nav-item">
+                            <a href="../index2.html" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>Tagihan Bulanan</p>
+                            </a>
+                </li>
+                <li class="nav-item">
+                            <a href="../index2.html" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>Tagihan Tunggakan</p>
+                            </a>
+                </li>
+                <li class="nav-item">
+                    <a href="widgets.html" class="nav-link">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <p>
+                            LOGOUT
+                        </p>
+                    </a>
+                </li>
 
             </ul>
         </nav>

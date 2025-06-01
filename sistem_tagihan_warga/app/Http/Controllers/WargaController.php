@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\penduduk;
 use App\Models\Warga;
 
 use Illuminate\Http\Request;
@@ -60,8 +61,11 @@ class WargaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+    //destroy:untuk hapus
     public function destroy(string $id)
     {
-        //
+        penduduk::where('no_kk', $id)->delete();
+        return redirect()->to('penduduk')->with('success', 'Data penduduk berhasil dihapus');
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\pendudukController;
+use App\Http\Controllers\userController;
 use App\Http\Controllers\WargaController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('warga', WargaController::class);
+Route::resource('penduduk', pendudukController::class);
+Route::resource('user',userController::class);
