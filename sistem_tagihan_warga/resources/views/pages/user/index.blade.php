@@ -57,11 +57,11 @@
                     <a href='{{ url('user/'.$item->id.'/edit')}}' class="btn btn-warning btn-sm">Ubah</a>
 
                     <!-- FORM HAPUS DATA -->
-                    <form onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="d-inline" action="{{ url('user/'.$item->id) }}" method="post">
+                    {{-- <form onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="d-inline" action="{{ url('user/'.$item->id) }}" method="post">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                    </form>
+                    </form> --}}
 
                 </td>
             </tr>

@@ -3,7 +3,7 @@
     <a href="#" class="brand-link">
 
         {{-- <img src="{{'templates/dist/img/AdminLTELogo.png'}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
-        <span class="brand-text font-weight-light">Sistem Tagihan Warga</span>
+        <span class="brand-text font-weight-light">UrPay</span>
     </a>
 
     <!-- Sidebar -->
@@ -11,7 +11,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="info">
-                <a href="#" class="d-block">Nama User Login</a>
+                <a href="#" class="d-block">{{ auth()->user()->name }}</a>
             </div>
         </div>
 
@@ -90,19 +90,19 @@
 
                 <li class="nav-header">MASTER DATA</li>
                 <li class="nav-item">
-                            <a href="penduduk" class="nav-link">
+                            <a href="{{ url('penduduk') }}" class="nav-link">
                                 <i class="nav-icon fas fa-file"></i>
                                 <p>PENDUDUK</p>
                             </a>
                 </li>
                 <li class="nav-item">
-                            <a href="tagihan" class="nav-link">
+                            <a href="{{ url('tagihan') }}" class="nav-link">
                                 <i class="nav-icon fas fa-circle"></i>
                                 <p>Tagihan</p>
                             </a>
                 </li>
                 <li class="nav-item">
-                            <a href="user" class="nav-link">
+                            <a href="{{ url('user') }}" class="nav-link">
                                 <i class="nav-icon far fa-user"></i>
                                 <p>User</p>
                             </a>
@@ -130,13 +130,16 @@
                             </a>
                 </li>
                 <li class="nav-item">
-                    <a href="widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-sign-out-alt"></i>
-                        <p>
-                            LOGOUT
-                        </p>
-                    </a>
-                </li>
+                <a  class="nav-link" href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <p>Logout</p>
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </li>
 
             </ul>
         </nav>

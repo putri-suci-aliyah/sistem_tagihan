@@ -3,12 +3,12 @@
 @section('header')
 <div class="row mb-2">
     <div class="col-sm-6">
-        <h1>Data Master Warga</h1>
+        <h1>Data Master Penduduk</h1>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Warga</li>
+            <li class="breadcrumb-item active">Penduduk</li>
         </ol>
     </div>
 </div>
@@ -26,7 +26,7 @@
 
 <div class="my-3 p-3 bg-body rounded shadow-sm">
     <div class="pb-3">
-        <a href='{{ url('penduduk/create') }}' class="btn btn-primary">+ Tambah Data Warga</a>
+        <a href='{{ url('penduduk/create') }}' class="btn btn-primary">+ Tambah Data Penduduk</a>
         <div class="d-inline-block ms-3">
             <!-- Content inside the new div -->
             <form class="d-flex" action="{{ url('penduduk') }}" method="get">
