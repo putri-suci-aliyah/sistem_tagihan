@@ -32,16 +32,15 @@ class TagihanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Tagihan $tagihan)
     {
-        $data = Tagihan::where('id', $id)->first();
-        return view('pages.tagihan.edit')->with('data', $data);
+        return view('pages.tagihan.edit')->with('data', $tagihan);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Tagihan $tagihan)
     {
         $request->validate([
             'harga_tagihan'=>'required'
@@ -53,7 +52,7 @@ class TagihanController extends Controller
             'harga_tagihan'=>$request->harga_tagihan
         ];
 
-        Tagihan::where('id', $id)->update($data);
+        $tagihan->update($data);
         return redirect()->to('tagihan')->with('success', 'Data tagihan berhasil diubah');
     }
 }
