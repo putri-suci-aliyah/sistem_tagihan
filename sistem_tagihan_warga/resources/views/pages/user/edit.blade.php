@@ -31,20 +31,20 @@
     @method('PUT')
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <div class="mb-3 row">
-            <label for="nim" class="col-sm-2 col-form-label">Nama User Edit</label>
+            <label for="nim" class="col-sm-2 col-form-label">Nama User <span style="color:red">*</span></label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name='name' value="{{ $data->name }}" id="name">
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Email</label>
+            <label for="nama" class="col-sm-2 col-form-label">Email <span style="color:red">*</span></label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" value="{{ $data->email }}" name='email' id="email">
             </div>
         </div>
 
         <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Password</label>
+            <label for="nama" class="col-sm-2 col-form-label">Password <span style="color:red">*</span></label>
             <div class="col-sm-10">
                 <input type="password" class="form-control" value="{{ $data->password }}" name='password' id="password">
             </div>

@@ -33,25 +33,25 @@
     @csrf
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <div class="mb-3 row">
-            <label for="nim" class="col-sm-2 col-form-label">No. KK</label>
+            <label for="nim" class="col-sm-2 col-form-label">No. KK <span style="color:red">*</span></label>
             <div class="col-sm-10">
                 <input type="number" class="form-control" name='no_kk' value="{{ Session::get('no_kk')}}" id="no_kk">
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Nama</label>
+            <label for="nama" class="col-sm-2 col-form-label">Nama <span style="color:red">*</span></label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" value="{{ Session::get('nama')}}" name='nama' id="nama">
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Alamat</label>
+            <label for="nama" class="col-sm-2 col-form-label">Alamat <span style="color:red">*</span></label>
             <div class="col-sm-10">
                 <textarea class="form-control" rows="3" name='alamat' id="alamat">{{ Session::get('alamat')}}</textarea>
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="no_hp" class="col-sm-2 col-form-label">Nomor HP</label>
+            <label for="no_hp" class="col-sm-2 col-form-label">Nomor HP <span style="color:red">*</span></label>
             <div class="col-sm-10">
                 <input type="number" class="form-control" value="{{ Session::get('no_hp')}}" name='no_hp' id="no_hp">
             </div>

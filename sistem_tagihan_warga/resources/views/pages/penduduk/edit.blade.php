@@ -39,19 +39,19 @@
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Nama</label>
+            <label for="nama" class="col-sm-2 col-form-label">Nama <span style="color:red">*</span></label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" value="{{ $data->nama}}" name='nama' id="nama">
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Alamat</label>
+            <label for="nama" class="col-sm-2 col-form-label">Alamat <span style="color:red">*</span></label>
             <div class="col-sm-10">
                 <textarea class="form-control" rows="3" name='alamat' id="alamat">{{ $data->alamat }}</textarea>
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Nomor Hp</label>
+            <label for="nama" class="col-sm-2 col-form-label">Nomor Hp <span style="color:red">*</span></label>
             <div class="col-sm-10">
                 <input type="number" class="form-control" value="{{ $data->no_hp}}" name='no_hp' id="no_hp">
             </div>

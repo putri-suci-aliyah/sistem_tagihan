@@ -91,13 +91,13 @@
                 <li class="nav-header">MASTER DATA</li>
                 <li class="nav-item">
                             <a href="{{ url('penduduk') }}" class="nav-link">
-                                <i class="nav-icon fas fa-file"></i>
-                                <p>PENDUDUK</p>
+                                <i class="nav-icon fas fa-user-group"></i>
+                                <p>Penduduk</p>
                             </a>
                 </li>
                 <li class="nav-item">
                             <a href="{{ url('tagihan') }}" class="nav-link">
-                                <i class="nav-icon fas fa-circle"></i>
+                                <i class="nav-icon fas fa-file-invoice"></i>
                                 <p>Tagihan</p>
                             </a>
                 </li>
