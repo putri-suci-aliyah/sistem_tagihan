@@ -31,37 +31,39 @@
 
 <form action='{{ url('penduduk') }}' method='post'>
     @csrf
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <div class="mb-3 row">
-            <label for="nim" class="col-sm-2 col-form-label">No. KK <span style="color:red">*</span></label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" name='no_kk' value="{{ Session::get('no_kk')}}" id="no_kk">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Form Data Penduduk</h3>
+        </div>
+        <div class="card-body">
+            <div class="mb-3 row">
+                <label for="nim" class="col-sm-2 col-form-label">No. KK <span style="color:red">*</span></label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name='no_kk' value="{{ Session::get('no_kk')}}" id="no_kk">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="nama" class="col-sm-2 col-form-label">Nama <span style="color:red">*</span></label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{{ Session::get('nama')}}" name='nama' id="nama">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="nama" class="col-sm-2 col-form-label">Alamat <span style="color:red">*</span></label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="3" name='alamat' id="alamat">{{ Session::get('alamat')}}</textarea>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="no_hp" class="col-sm-2 col-form-label">Nomor HP <span style="color:red">*</span></label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" value="{{ Session::get('no_hp')}}" name='no_hp' id="no_hp">
+                </div>
             </div>
         </div>
-        <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Nama <span style="color:red">*</span></label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" value="{{ Session::get('nama')}}" name='nama' id="nama">
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Alamat <span style="color:red">*</span></label>
-            <div class="col-sm-10">
-                <textarea class="form-control" rows="3" name='alamat' id="alamat">{{ Session::get('alamat')}}</textarea>
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <label for="no_hp" class="col-sm-2 col-form-label">Nomor HP <span style="color:red">*</span></label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" value="{{ Session::get('no_hp')}}" name='no_hp' id="no_hp">
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <label for="spasi" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary" name="submit">SIMPAN</button>
-                <a href="{{ url('penduduk') }}" class="btn btn-secondary">KEMBALI</a>
-            </div>
+        <div class="card-footer">
+            <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+            <button type="reset" class="btn btn-default float-right">Batal</button>
         </div>
     </div>
 </form>

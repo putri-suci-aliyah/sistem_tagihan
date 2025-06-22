@@ -28,32 +28,34 @@
     @endif
 <form action='{{ url('user') }}' method='post'>
     @csrf
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <div class="mb-3 row">
-            <label for="nim" class="col-sm-2 col-form-label">Nama User <span style="color:red">*</span></label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name='name' value="{{ Session::get('name')}}" id="name">
-            </div>
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Tambah Form Data User</h3>
         </div>
-        <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Email <span style="color:red">*</span></label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" value="{{ Session::get('email')}}" name='email' id="email">
+        <div class="card-body">
+            <div class="mb-3 row">
+                <label for="nim" class="col-sm-2 col-form-label">Nama User <span style="color:red">*</span></label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name='name' value="{{ Session::get('name')}}" id="name">
+                </div>
             </div>
-        </div>
+            <div class="mb-3 row">
+                <label for="nama" class="col-sm-2 col-form-label">Email <span style="color:red">*</span></label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" value="{{ Session::get('email')}}" name='email' id="email">
+                </div>
+            </div>
 
-        <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Password <span style="color:red">*</span></label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" value="{{ Session::get('password')}}" name='password' id="password">
+            <div class="mb-3 row">
+                <label for="nama" class="col-sm-2 col-form-label">Password <span style="color:red">*</span></label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" value="{{ Session::get('password')}}" name='password' id="password">
+                </div>
             </div>
         </div>
-        <div class="mb-3 row">
-            <label for="spasi" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary" name="submit">SIMPAN</button>
-                <a href="{{ url('user') }}" class="btn btn-secondary">KEMBALI</a>
-            </div>
+        <div class="card-footer">
+            <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+            <button type="reset" class="btn btn-default float-right">Batal</button>
         </div>
     </div>
 </form>

@@ -30,91 +30,36 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                {{-- <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Data Master
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="/warga" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Warga</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../index2.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Tagihan</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../index3.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>User</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-edit"></i>
-                        <p>
-                            Transaksi Tagihan
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Laporan
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-sign-out-alt"></i>
-                        <p>
-                            LOGOUT
-                        </p>
-                    </a>
-                </li> --}}
 
                 <li class="nav-header">MASTER DATA</li>
                 <li class="nav-item">
-                            <a href="{{ url('penduduk') }}" class="nav-link">
+                            <a href="{{ url('penduduk') }}" class="nav-link {{ request()->is('penduduk*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-user-group"></i>
                                 <p>Penduduk</p>
                             </a>
                 </li>
                 <li class="nav-item">
-                            <a href="{{ url('tagihan') }}" class="nav-link">
+                            <a href="{{ url('tagihan') }}" class="nav-link {{ request()->is('tagihan*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-file-invoice"></i>
                                 <p>Tagihan</p>
                             </a>
                 </li>
                 <li class="nav-item">
-                            <a href="{{ url('user') }}" class="nav-link">
+                            <a href="{{ url('user') }}" class="nav-link {{ request()->is('user*') ? 'active' : '' }}">
                                 <i class="nav-icon far fa-user"></i>
                                 <p>User</p>
                             </a>
                 </li>
-
+                <hr class="my-2 border-secondary" />
                 <li class="nav-header">TRANSAKSI</li>
                 <li class="nav-item">
-                            <a href="widgets.html" class="nav-link">
+                            <a href="{{ url('transaksi_tagihan') }}" class="nav-link {{ request()->is('transaksi_tagihan*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-edit"></i>
                                 <p>Transaksi Tagihan</p>
                             </a>
                 </li>
+
+                <hr class="my-2 border-secondary" />
 
                 <li class="nav-header">LAPORAN</li>
                 <li class="nav-item">
@@ -129,6 +74,8 @@
                                 <p>Tagihan Tunggakan</p>
                             </a>
                 </li>
+
+                <hr class="my-2 border-secondary" />
                 <li class="nav-item">
                 <a  class="nav-link" href="{{ route('logout') }}"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

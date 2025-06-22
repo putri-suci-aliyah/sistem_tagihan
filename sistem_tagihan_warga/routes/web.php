@@ -3,6 +3,7 @@
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\pendudukController;
 use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\TransaksiTagihanController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\WargaController;
 use Illuminate\Support\Facades\Route;
@@ -26,11 +27,13 @@ Route::post('/login', [loginController::class, 'login'])->name('login');
 Route::post('/logout', [loginController::class, 'logout'])->name('logout');
 
 
-
+// middleware('auth'): Menandakan bahwa semua rute di dalam group ini hanya dapat diakses
+// oleh user yang sudah login (terautentikasi). auth: mengecek apakah user sudah login.
 Route::middleware('auth')->group(function(){
     Route::resource('tagihan', TagihanController::class);
     Route::resource('penduduk', pendudukController::class);
     Route::resource('user',userController::class);
+    Route::resource('transaksi_tagihan', TransaksiTagihanController::class);
 });
 
 

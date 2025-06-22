@@ -29,37 +29,39 @@
 <form action='{{ url('tagihan/'.$data->id) }}' method='post'>
     @csrf
     @method('PUT')
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <div class="mb-3 row">
-            <label for="nim" class="col-sm-2 col-form-label">Kode Tagihan</label>
-            <div class="col-sm-10">
-                {{$data->kode_tagihan}}
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Form Edit Data Tagihan</h3>
+        </div>
+        <div class="card-body">
+            <div class="mb-3 row">
+                <label for="nim" class="col-sm-2 col-form-label">Kode Tagihan</label>
+                <div class="col-sm-10">
+                    {{$data->kode_tagihan}}
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="nama" class="col-sm-2 col-form-label">Jenis Tagihan</label>
+                <div class="col-sm-10">
+                    @if($data->jenis_tagihan == 1)
+                        Tagihan Air
+                    @elseif($data->jenis_tagihan == 2)
+                        Tagihan Keamanan
+                    @else
+                        Tagihan Sampah
+                    @endif
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="nama" class="col-sm-2 col-form-label">Harga Tagihan <span style="color:red">*</span></label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" value="{{ $data->harga_tagihan}}" name='harga_tagihan' id="harga_tagihan">
+                </div>
             </div>
         </div>
-         <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Jenis Tagihan</label>
-            <div class="col-sm-10">
-                @if($data->jenis_tagihan == 1)
-                    Tagihan Air
-                @elseif($data->jenis_tagihan == 2)
-                    Tagihan Keamanan
-                @else
-                    Tagihan Sampah
-                @endif
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <label for="nama" class="col-sm-2 col-form-label">Harga Tagihan</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" value="{{ $data->harga_tagihan}}" name='harga_tagihan' id="harga_tagihan">
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <label for="spasi" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary" name="submit">SIMPAN</button>
-                <a href="{{ url('tagihan') }}" class="btn btn-secondary">KEMBALI</a>
-            </div>
+        <div class="card-footer">
+            <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+            <button type="reset" class="btn btn-default float-right">Batal</button>
         </div>
     </div>
 </form>

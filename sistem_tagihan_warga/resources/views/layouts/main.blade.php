@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -74,6 +74,41 @@
     <script src="{{ asset('templates/dist/js/adminlte.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('templates/dist/js/demo.js') }}"></script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const qtyInputs = document.querySelectorAll(".qty");
+
+        qtyInputs.forEach(input => {
+            input.addEventListener("input", function () {
+                const id = this.id.replace("qty", ""); // Ambil ID unik data_tagihan
+
+                const hargaTagihan = parseFloat(document.getElementById(`harga_tagihan[${id}]`).value) || 0;
+                const qty = parseFloat(this.value) || 0;
+
+                const totalBayar = hargaTagihan * qty;
+
+                document.getElementById(`total_bayar[${id}]`).value = totalBayar;
+
+                // Hitung total keseluruhan
+                hitungTotalPembayaran();
+            });
+        });
+
+        function hitungTotalPembayaran() {
+            let total = 0;
+            const totalBayarInputs = document.querySelectorAll(".total_bayar");
+
+            totalBayarInputs.forEach(input => {
+                total += parseFloat(input.value) || 0;
+            });
+
+            document.getElementById("total_pembayaran").value = total;
+        }
+    });
+</script>
+
+
 </body>
 
 </html>
