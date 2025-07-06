@@ -27,7 +27,7 @@
         </div>
     @endif
 <!-- START FORM -->
-<form action='{{ url('penduduk/'.$data->no_kk) }}' method='post'>
+<form action='{{ url('warga_penduduk/'.$data->id) }}' method='post'>
     @csrf
     @method('PUT')
     <div class="card card-primary">

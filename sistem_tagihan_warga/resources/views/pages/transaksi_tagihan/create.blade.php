@@ -29,7 +29,7 @@
 @endif
 
 
-<form action='{{ url('transaksi_tagihan') }}' method='post' class="form-horizontal">
+<form action='{{ url('transaksi') }}' method='post' class="form-horizontal">
     @csrf
 
         <div class="card card-primary">
@@ -50,9 +50,9 @@
                     <label for="reservationdate" class="col-sm-2 col-form-label">Data Warga</label>
                     <div class="col-sm-10">
                         <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                            <select class="form-control select2" style="width: 100%;">
-                                @foreach ($penduduk as $data_penduduk)
-                                    <option value="{{ $data_penduduk->no_kk }}">
+                            <select id="warga_penduduks_id" name="warga_penduduks_id" class="form-control select2" style="width: 100%;">
+                                @foreach ($warga_penduduk as $data_penduduk)
+                                    <option value="{{ $data_penduduk->id }}">
                                         {{ $data_penduduk->no_kk }} - {{ $data_penduduk->nama }}
                                     </option>
                                 @endforeach
@@ -61,17 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="reservationdate" class="col-sm-2 col-form-label">Status Pembayaran</label>
-                    <div class="col-sm-10">
-                        <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                            <select class="form-control select2" style="width: 100%;">
-                                <option value="1">Belum Lunas</option>
-                                <option value="2">Lunas</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+
 
                 <div class="mb-3 row">
                 <label for="nama" class="col-sm-2 col-form-label">Data Tagihan</label>

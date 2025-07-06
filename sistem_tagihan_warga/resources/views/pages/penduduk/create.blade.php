@@ -29,7 +29,7 @@
     </div>
 @endif
 
-<form action='{{ url('penduduk') }}' method='post'>
+<form action='{{ url('warga_penduduk') }}' method='post'>
     @csrf
     <div class="card card-primary">
         <div class="card-header">

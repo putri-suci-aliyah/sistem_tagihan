@@ -60,7 +60,7 @@
                         <td>{{$item->harga_tagihan}}</td>
                         <td>
                             <!-- HREF KE HALAMAN EDIT DATA -->
-                            <a href='{{ url('tagihan/'.$item->id.'/edit')}}' class="btn btn-warning btn-sm">Ubah</a>
+                            <a href='{{ url('tagihan/'.$item->id.'/edit')}}' class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i>Ubah</a>
                         </td>
                     </tr>
                     <?php $no++; ?>

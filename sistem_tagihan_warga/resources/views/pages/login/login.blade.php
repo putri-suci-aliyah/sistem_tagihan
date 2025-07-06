@@ -20,7 +20,7 @@
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <a href=""><b>Sistem</b>Tagihan Warga</a>
+      <a href="">UrPay</a>
     </div>
     @if (count($errors))
     <div class="pt.3">

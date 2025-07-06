@@ -33,7 +33,7 @@
 
                 <li class="nav-header">MASTER DATA</li>
                 <li class="nav-item">
-                            <a href="{{ url('penduduk') }}" class="nav-link {{ request()->is('penduduk*') ? 'active' : '' }}">
+                            <a href="{{ url('warga_penduduk') }}" class="nav-link {{ request()->is('warga_penduduk*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-user-group"></i>
                                 <p>Penduduk</p>
                             </a>
@@ -50,16 +50,19 @@
                                 <p>User</p>
                             </a>
                 </li>
-                <hr class="my-2 border-secondary" />
+
+                <hr style="border-top: 1px solid #6c757d; margin: 0.5rem;" />
+
+
                 <li class="nav-header">TRANSAKSI</li>
                 <li class="nav-item">
-                            <a href="{{ url('transaksi_tagihan') }}" class="nav-link {{ request()->is('transaksi_tagihan*') ? 'active' : '' }}">
+                            <a href="{{ url('transaksi') }}" class="nav-link {{ request()->is('transaksi*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-edit"></i>
                                 <p>Transaksi Tagihan</p>
                             </a>
                 </li>
 
-                <hr class="my-2 border-secondary" />
+                <hr style="border-top: 1px solid #6c757d; margin: 0.5rem;" />
 
                 <li class="nav-header">LAPORAN</li>
                 <li class="nav-item">
@@ -75,7 +78,9 @@
                             </a>
                 </li>
 
-                <hr class="my-2 border-secondary" />
+                <hr style="border-top: 1px solid #6c757d; margin: 0.5rem;" />
+
+
                 <li class="nav-item">
                 <a  class="nav-link" href="{{ route('logout') }}"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

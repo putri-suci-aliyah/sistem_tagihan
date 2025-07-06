@@ -23,7 +23,7 @@ class loginController extends Controller
 
         if ($user && Hash::check($password, $user->password)) {
             Auth::login($user);
-            return redirect()->to('penduduk');
+            return redirect()->to('warga_penduduk');
         } else {
             return back()->withInput()->withErrors(['email' => 'User tidak ditemukan. Silahkan login kembali']);
         }

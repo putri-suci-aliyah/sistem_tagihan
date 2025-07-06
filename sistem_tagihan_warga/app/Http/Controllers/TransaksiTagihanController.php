@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\penduduk;
 use App\Models\Tagihan;
 use App\Models\TransaksiTagihan;
+use App\Models\WargaPenduduk;
 use Illuminate\Http\Request;
 
 class TransaksiTagihanController extends Controller
@@ -22,9 +23,9 @@ class TransaksiTagihanController extends Controller
      */
     public function create()
     {
-        $penduduk = penduduk::all();
+        $warga_penduduk = WargaPenduduk::all();
         $tagihan = Tagihan::all();
-        return view('pages.transaksi_tagihan.create',compact('penduduk','tagihan'));
+        return view('pages.transaksi_tagihan.create',compact('warga_penduduk','tagihan'));
     }
 
     /**
