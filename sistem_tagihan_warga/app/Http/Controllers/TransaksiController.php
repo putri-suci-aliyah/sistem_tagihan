@@ -6,13 +6,14 @@ use App\Models\Tagihan;
 use App\Models\Transaksi;
 use App\Models\WargaPenduduk;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Twilio\Rest\Client;
 
 class TransaksiController extends Controller
 {
     public function pelunasan_tagihan(Request $request, $id){
         $data = Transaksi::where('id', $id)->first();
-        $data->status_pembayaran = "2";
+        $data->status_pembayaran = "Lunas";
         $data->save();
         return redirect()->to('transaksi')->with('success', 'Data status pembayaran transaksi tagihan warga berhasil diubah');
     }
@@ -67,11 +68,11 @@ class TransaksiController extends Controller
             $data = Transaksi::where('kode_transaksi', 'like', "%$katakunci%")
             ->with('warga_penduduks')
             ->orderBy('id', 'desc')
-            ->paginate(2);
+            ->paginate(10);
         } else {
            $data = Transaksi::with('warga_penduduks')
             ->orderBy('id', 'desc')
-            ->paginate(2);
+            ->paginate(10);
         }
         return view('pages.transaksi_tagihan.index')->with('data', $data);
     }
@@ -92,9 +93,27 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'warga_penduduks_id' => 'required|exists:warga_penduduks,id',
+            'periode_bulan' => 'required',
+            'periode_tahun' => 'required|integer',
+            'periode_bulan' => [
+                'required',
+                Rule::unique('transaksis')
+                    ->where(function ($query) use ($request) {
+                        return $query->where('warga_penduduks_id', $request->warga_penduduks_id)
+                                    ->where('periode_tahun', $request->periode_tahun)
+                                    ->where('periode_bulan', $request->periode_bulan);
+                    }),
+            ],
+        ], [
+            'periode_bulan.unique' => 'Tagihan untuk warga ini pada periode tersebut sudah ada.',
+        ]);
         $transaksi = new Transaksi();
         $transaksi->kode_transaksi = "TAG/".time();
         $transaksi->warga_penduduks_id = $request->warga_penduduks_id;
+        $transaksi->periode_bulan = $request->periode_bulan;
+        $transaksi->periode_tahun = $request->periode_tahun;
         $transaksi->save();
 
         $harga_tagihan = $request->input('harga_tagihan'); // [id => harga]
@@ -130,7 +149,9 @@ class TransaksiController extends Controller
     public function edit(Transaksi $transaksi)
     {
         $data = $transaksi;
-        return view('pages.transaksi_tagihan.edit')->with('data', $data);
+        $warga_penduduk = WargaPenduduk::all();
+        # return view('pages.transaksi_tagihan.edit')->with('data', $data);
+        return view('pages.transaksi_tagihan.edit',compact('data','warga_penduduk'));
     }
 
     /**
@@ -138,6 +159,22 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, Transaksi $transaksi)
     {
+        $request->validate([
+            'warga_penduduks_id' => 'required|exists:warga_penduduks,id',
+            'periode_bulan' => 'required',
+            'periode_tahun' => 'required|integer',
+            'periode_bulan' => [
+            'required',
+            Rule::unique('transaksis')
+                ->where(function ($query) use ($request) {
+                    return $query->where('warga_penduduks_id', $request->warga_penduduks_id)
+                                ->where('periode_tahun', $request->periode_tahun)
+                                ->where('periode_bulan', $request->periode_bulan);
+                }),
+            ],
+        ], [
+            'periode_bulan.unique' => 'Tagihan untuk warga ini pada periode tersebut sudah ada.',
+        ]);
         $harga_tagihan = $request->input('harga_tagihan'); // [id => harga]
         $qty = $request->input('qty'); // [id => qty]
 
@@ -152,6 +189,12 @@ class TransaksiController extends Controller
             }
         }
 
+
+
+        $transaksi->warga_penduduks_id = $request->warga_penduduks_id;
+        $transaksi->periode_bulan = $request->periode_bulan;
+        $transaksi->periode_tahun = $request->periode_tahun;
+        $transaksi->save();
         $transaksi->tagihan()->sync($syncData);
 
         return redirect()->to('transaksi')->with('success', 'Data transasi tagihan warga berhasil diubah');

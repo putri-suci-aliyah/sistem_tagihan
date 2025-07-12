@@ -51,10 +51,48 @@
             <div class="form-group row">
                 <label for="reservationdate" class="col-sm-2 col-form-label">Data Warga</label>
                 <div class="col-sm-10">
-                    {{$data->warga_penduduks->nama}} - {{$data->warga_penduduks->no_kk}}
+                    <select id="warga_penduduks_id" name="warga_penduduks_id" class="form-control select2" style="width: 100%;">
+                        @foreach ($warga_penduduk as $data_warga)
+                            <option value="{{ $data_warga->id }}" {{ $data_warga->id == $data->warga_penduduks->id ? 'selected' : '' }}>
+                                {{ $data_warga->no_kk }} - {{ $data_warga->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+
                 </div>
             </div>
-
+            @php
+                $daftar_bulan = [
+                    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                ];
+            @endphp
+            <div class="form-group row">
+                <label for="reservationdate" class="col-sm-2 col-form-label">Bulan </label>
+                <div class="col-sm-10">
+                    <div class="input-group" id="reservationdate">
+                        <select id="periode_bulan" name="periode_bulan" class="form-control select2" style="width: 50%;">
+                            @foreach ($daftar_bulan as $bulan)
+                                <option value="{{ $bulan }}" {{ $data->periode_bulan == $bulan ? 'selected' : '' }}>
+                                    {{ $bulan }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="reservationdate" class="col-sm-2 col-form-label">Tahun </label>
+                <div class="col-sm-10">
+                    <div class="input-group" id="reservationdate">
+                        <select id="periode_tahun" name="periode_tahun" class="form-control select2" style="width: 10%;">
+                            <option value="{{ $data->periode_tahun }}" selected>
+                                {{ $data->periode_tahun }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="mb-3 row">
             <label for="nama" class="col-sm-2 col-form-label">Data Tagihan</label>
             <div class="col-sm-10">
@@ -62,8 +100,8 @@
                     <thead>
                         <tr>
                             <th class="col-md-1">No</th>
-                            <th class="col-md-3">Kode Tagihan</th>
-                            <th class="col-md-1">Harga</th>
+                            <th class="col-md-2">Kode Tagihan</th>
+                            <th class="col-md-2">Harga</th>
                             <th class="col-md-1">Qty</th>
                             <th class="col-md-2">Sub Total</th>
                         </tr>
@@ -72,14 +110,23 @@
                             $total = 0;
                         @endphp
                         @foreach ($data->tagihan as $data_tagihan)
-                            <tr>
-                                <td>{{$no++}}.</td>
-                                <td>{{$data_tagihan->kode_tagihan}}</td>
-                                <td><input type="number" class="form-control harga_tagihan" name="harga_tagihan[{{$data_tagihan->id}}]" id="harga_tagihan[{{$data_tagihan->id}}]" value="{{$data_tagihan->harga_tagihan}}" readonly></td>
-                                <td><input type="number" class="form-control qty" name='qty[{{$data_tagihan->id}}]' id="qty{{$data_tagihan->id}}" value="{{$data_tagihan->pivot->qty}}"></td>
-                                <td><input type="number" class="form-control total_bayar" name='total_bayar[{{$data_tagihan->id}}]' id="total_bayar[{{$data_tagihan->id}}]" value="{{$data_tagihan->pivot->qty * $data_tagihan->pivot->harga_tagihan}}" readonly></td>
-                            </tr>
-
+                            @if($data_tagihan->kode_tagihan == 'TAG-AIR')
+                                <tr>
+                                    <td>{{$no++}}.</td>
+                                    <td>{{$data_tagihan->kode_tagihan}}</td>
+                                    <td><input type="number" class="form-control harga_tagihan" name="harga_tagihan[{{$data_tagihan->id}}]" id="harga_tagihan[{{$data_tagihan->id}}]" value="{{$data_tagihan->harga_tagihan}}" readonly></td>
+                                    <td><input type="number" class="form-control qty" name='qty[{{$data_tagihan->id}}]' id="qty{{$data_tagihan->id}}" value="{{$data_tagihan->pivot->qty}}"></td>
+                                    <td><input type="number" class="form-control total_bayar" name='total_bayar[{{$data_tagihan->id}}]' id="total_bayar[{{$data_tagihan->id}}]" value="{{$data_tagihan->pivot->qty * $data_tagihan->pivot->harga_tagihan}}" readonly></td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td>{{$no++}}.</td>
+                                    <td>{{$data_tagihan->kode_tagihan}}</td>
+                                    <td><input type="number" class="form-control harga_tagihan" name="harga_tagihan[{{$data_tagihan->id}}]" id="harga_tagihan[{{$data_tagihan->id}}]" value="{{$data_tagihan->harga_tagihan}}" readonly></td>
+                                    <td><input type="number" class="form-control qty" name='qty[{{$data_tagihan->id}}]' id="qty{{$data_tagihan->id}}" value="{{$data_tagihan->pivot->qty}}" readonly></td>
+                                    <td><input type="number" class="form-control total_bayar" name='total_bayar[{{$data_tagihan->id}}]' id="total_bayar[{{$data_tagihan->id}}]" value="{{$data_tagihan->pivot->qty * $data_tagihan->pivot->harga_tagihan}}" readonly></td>
+                                </tr>
+                            @endif
                             @php
                                     $total += $data_tagihan->pivot->qty * $data_tagihan->pivot->harga_tagihan;
                             @endphp
@@ -96,9 +143,9 @@
             </div>
         </div>
     </div>
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Simpan</button>
-        <button type="reset" class="btn btn-default float-right">Batal</button>
+    <div class="card-footer d-flex justify-content-end">
+        <a href="{{ url('transaksi') }}" class="btn btn-secondary mr-2">Batal</a>
+        <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
     </div>
     </div>
 

@@ -59,9 +59,9 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer">
+        <div class="card-footer d-flex justify-content-end">
+            <a href="{{ url('tagihan') }}" class="btn btn-secondary mr-2">Batal</a>
             <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
-            <button type="reset" class="btn btn-default float-right">Batal</button>
         </div>
     </div>
 </form>

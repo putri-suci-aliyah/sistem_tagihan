@@ -12,6 +12,7 @@ class WargaPenduduk extends Model
     protected $table = 'warga_penduduks';
     public $timestamps = false;
 
+    // Relasi one-to-many: satu warga dapat memiliki banyak transaksi
     public function transaksi()
     {
         return $this->hasMany(Transaksi::class);

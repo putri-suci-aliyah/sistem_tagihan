@@ -11,6 +11,11 @@ class Tagihan extends Model
     protected $table = 'tagihans';
     public $timestamps = false;
 
+
+    /**
+     * Relasi Many-to-Many dari model Tagihan ke model Transaksi
+     * melalui tabel pivot 'detail_transaksis'
+     */
     public function transaksi()
     {
         return $this->belongsToMany(Transaksi::class, 'detail_transaksis')

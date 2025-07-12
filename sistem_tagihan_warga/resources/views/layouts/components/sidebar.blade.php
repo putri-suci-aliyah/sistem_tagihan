@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
+    <a href="{{ url('warga_penduduk') }}" class="brand-link">
 
         {{-- <img src="{{'templates/dist/img/AdminLTELogo.png'}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
         <span class="brand-text font-weight-light">UrPay</span>
@@ -11,7 +11,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="info">
-                <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+                <a href="{{ url('warga_penduduk') }}" class="d-block">{{ auth()->user()->name }}</a>
             </div>
         </div>
 
@@ -66,17 +66,25 @@
 
                 <li class="nav-header">LAPORAN</li>
                 <li class="nav-item">
+                    <a href='#' class="nav-link" data-toggle="modal" data-target="#searchModal" id="searchLink">
+                        <i class="nav-icon bi bi-file-earmark-excel"></i>
+                        <p>
+                            Unduh Ke Excel
+                        </p>
+                    </a>
+                </li>
+                {{-- <li class="nav-item">
                             <a href="../index2.html" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
-                                <p>Tagihan Bulanan</p>
+                                <p>Lunas</p>
                             </a>
                 </li>
                 <li class="nav-item">
                             <a href="../index2.html" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
-                                <p>Tagihan Tunggakan</p>
+                                <p>Belum Lunas</p>
                             </a>
-                </li>
+                </li> --}}
 
                 <hr style="border-top: 1px solid #6c757d; margin: 0.5rem;" />
 

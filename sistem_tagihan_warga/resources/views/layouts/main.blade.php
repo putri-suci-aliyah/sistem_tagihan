@@ -19,6 +19,65 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+    <!-- Modal -->
+  <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form method="GET" action="{{ route('export_excel') }}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="searchModalLabel">Unduh Ke Excel</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <div class="modal-body">
+          <div class="form-group row align-items-center">
+            <label for="name" class="col-sm-3 col-form-label">Bulan</label>
+            <div class="col-sm-9">
+              <select id="periode_bulan" name="periode_bulan" class="form-control select2" style="width: 50%;">
+                    <option value="Januari">Januari</option>
+                    <option value="Februari">Februari</option>
+                    <option value="Maret">Maret</option>
+                    <option value="April">April</option>
+                    <option value="Mei">Mei</option>
+                    <option value="Juni">Juni</option>
+                    <option value="Juli">Juli</option>
+                    <option value="Agustus">Agustus</option>
+                    <option value="September">September</option>
+                    <option value="Oktober">Oktober</option>
+                    <option value="November">November</option>
+                    <option value="Desember">Desember</option>
+                </select>
+            </div>
+          </div>
+          <div class="form-group row align-items-center">
+            <label for="name" class="col-sm-3 col-form-label">Tahun</label>
+            <div class="col-sm-9">
+              <select id="periode_tahun" name="periode_tahun" class="form-control select2" style="width: 50%;">
+                    <option value="2025">2025</option>
+                </select>
+            </div>
+          </div>
+
+          <div class="form-group row align-items-center">
+            <label for="name" class="col-sm-3 col-form-label">Tahun</label>
+            <div class="col-sm-9">
+              <select id="status_pembayaran" name="status_pembayaran" class="form-control select2" style="width: 50%;">
+                  <option value="Lunas">Lunas</option>
+                  <option value="Belum Lunas">Belum Lunas</option>
+                </select>
+            </div>
+          </div>
+        </div>
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-info">Unduh</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -75,7 +134,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('templates/dist/js/demo.js') }}"></script>
 
-    <script>
+    {{-- <script>
     document.addEventListener("DOMContentLoaded", function () {
         const qtyInputs = document.querySelectorAll(".qty");
 
@@ -90,7 +149,6 @@
 
                 document.getElementById(`total_bayar[${id}]`).value = totalBayar;
 
-                // Hitung total keseluruhan
                 hitungTotalPembayaran();
             });
         });
@@ -106,9 +164,37 @@
             document.getElementById("total_pembayaran").value = total;
         }
     });
+</script> --}}
+
+{{-- @yield('scripts') --}}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        hitungTotalPembayaran(); // Jalankan pertama kali saat halaman dimuat
+
+        // Kalau qty bisa diubah user, tambahkan event listener:
+        document.querySelectorAll('.qty').forEach(function (inputQty) {
+            inputQty.addEventListener('input', function () {
+                const row = this.closest('tr');
+                const harga = parseFloat(row.querySelector('.harga_tagihan').value) || 0;
+                const qty = parseFloat(this.value) || 0;
+                const subTotal = harga * qty;
+                row.querySelector('.total_bayar').value = subTotal;
+                hitungTotalPembayaran();
+            });
+        });
+
+        function hitungTotalPembayaran() {
+            let total = 0;
+            document.querySelectorAll('.total_bayar').forEach(function (input) {
+                if (input.id !== 'total_pembayaran') {
+                    total += parseFloat(input.value) || 0;
+                }
+            });
+            document.getElementById('total_pembayaran').value = total;
+        }
+    });
 </script>
-
-
 </body>
 
 </html>

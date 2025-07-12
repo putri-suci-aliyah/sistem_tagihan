@@ -54,9 +54,11 @@
                 <tr>
                     <th class="col-md-1">No</th>
                     <th class="col-md-1">Kode Transaksi</th>
-                    <th class="col-md-2">Nama Warga</th>
+                    <th class="col-md-1">Nama Warga</th>
+                    <th class="col-md-1">Bulan</th>
+                    <th class="col-md-1">Tahun</th>
                     <th class="col-md-2">Total Tagihan</th>
-                    <th class="col-md-2">Status</th>
+                    <th class="col-md-1">Status</th>
                     <th class="col-md-4">Aksi</th>
                 </tr>
             </thead>
@@ -67,6 +69,8 @@
                         <td>{{$no}}</td>
                         <td>{{$item->kode_transaksi}}</td>
                         <td>{{$item->warga_penduduks->no_kk}} - {{$item->warga_penduduks->nama}}</td>
+                        <td>{{$item->periode_bulan}}</td>
+                        <td>{{$item->periode_tahun}}</td>
 
                         <td>
                             @php
@@ -80,14 +84,10 @@
                             Rp. {{ number_format($total, 2) }}
                         </td>
                         <td>
-                            @if($item->status_pembayaran == "1")
-                                Belum Lunas
-                            @else
-                                Lunas
-                            @endif
+                            {{$item->status_pembayaran}}
                         </td>
                         <td>
-                            @if($item->status_pembayaran !== '2')
+                            @if($item->status_pembayaran != 'Lunas')
                                 <!-- HREF KE HALAMAN EDIT DATA -->
                                 <a href='{{ url('transaksi/'.$item->id.'/edit')}}' class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i>Ubah</a>
 

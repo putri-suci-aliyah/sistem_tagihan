@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GenerateExcelController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\pendudukController;
 use App\Http\Controllers\TagihanController;
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('warga_penduduk', WargaPendudukController::class);
     Route::resource('user', userController::class);
     Route::resource('transaksi', TransaksiController::class);
+    Route::get('export_excel', [GenerateExcelController::class, 'export'])->name('export_excel');
 
     Route::put('transaksi/notifikasi_whatsapp/{id}', [TransaksiController::class, 'notifikasi_whatsapp']);
     Route::put('transaksi/pelunasan_tagihan/{id}', [TransaksiController::class, 'pelunasan_tagihan']);
