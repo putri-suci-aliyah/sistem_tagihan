@@ -17,6 +17,8 @@ class TransaksiController extends Controller
         $data->save();
         return redirect()->to('transaksi')->with('success', 'Data status pembayaran transaksi tagihan warga berhasil diubah');
     }
+
+    //
     public function notifikasi_whatsapp(Request $request, $id)
     {
         $data = Transaksi::where('id', $id)->with('warga_penduduks')->first();
@@ -26,6 +28,14 @@ class TransaksiController extends Controller
         };
 
         $pesan = "Tagihan an. ". $data->warga_penduduks->nama . " dengan kode transaksi " . $data->kode_transaksi . " sebesar Rp. ". number_format($total_pembayaran);
+        $pesan .= "\nDetail Tagihan : \n";
+
+        $nomer = 1;
+        foreach ($data->tagihan as $item) {
+            $pesan .= $nomer++ . ". " .$item->kode_tagihan . " - Rp. ". number_format($item->pivot->qty * $item->pivot->harga_tagihan) . " \n";
+        };
+
+        $pesan .= "\nTerimakasih";
         $notifikasi_wa = "Notifikasi WA ". $data->warga_penduduks->nama;
 
         $nomor = $data->warga_penduduks->no_hp;
@@ -63,17 +73,31 @@ class TransaksiController extends Controller
      */
     public function index(Request $request)
     {
+        // $katakunci = $request->katakunci;
+        // if (strlen($katakunci)) {
+        //     $data = Transaksi::where('kode_transaksi', 'like', "%$katakunci%")
+        //     ->with('warga_penduduks')
+        //     ->orderBy('id', 'desc')
+        //     ->paginate(10);
+        // } else {
+        //    $data = Transaksi::with('warga_penduduks')
+        //     ->orderBy('id', 'desc')
+        //     ->paginate(10);
+        // }
+        // return view('pages.transaksi_tagihan.index')->with('data', $data);
+
         $katakunci = $request->katakunci;
         if (strlen($katakunci)) {
-            $data = Transaksi::where('kode_transaksi', 'like', "%$katakunci%")
-            ->with('warga_penduduks')
-            ->orderBy('id', 'desc')
-            ->paginate(10);
+            $data = Transaksi::where('kode_transaksi','like',"%$katakunci%")
+                    ->orWhere('periode_bulan','like',"%$katakunci%")
+                    ->orWhere('periode_tahun','like',"%$katakunci%")
+                    ->orWhere('status_pembayaran','like',"%$katakunci%")
+            ->orderBy('id','desc')->paginate(10);
         } else {
-           $data = Transaksi::with('warga_penduduks')
-            ->orderBy('id', 'desc')
-            ->paginate(10);
+            $data = Transaksi::orderBy('id','desc')->paginate(10);
         }
+        // return view akan memanggil dari folder pages>penduduk dari file index.blade.php
+        // with : mengambil dari database
         return view('pages.transaksi_tagihan.index')->with('data', $data);
     }
 
@@ -122,7 +146,7 @@ class TransaksiController extends Controller
         $syncData = [];
 
         foreach ($qty as $tagihan_id => $jumlah) {
-            if ($jumlah > 0) {  // only sync if qty > 0, optional check
+            if ($jumlah > 0) {
                 $syncData[$tagihan_id] = [
                     'qty' => $jumlah,
                     'harga_tagihan' => $harga_tagihan[$tagihan_id] ?? 0,

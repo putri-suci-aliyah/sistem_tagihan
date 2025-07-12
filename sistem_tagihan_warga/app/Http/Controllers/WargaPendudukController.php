@@ -13,9 +13,7 @@ class WargaPendudukController extends Controller
     }
 
 
-    /**
-     * Display a listing of the resource.
-     */
+    // Fungsi index di gunakan untuk menampilkan halaman tampilan awal data penduduk
     public function index(Request $request)
     {
         $katakunci = $request->katakunci;
@@ -28,7 +26,8 @@ class WargaPendudukController extends Controller
         } else {
             $data = WargaPenduduk::orderBy('no_kk','desc')->paginate(10);
         }
-
+        // return view akan memanggil dari folder pages>penduduk dari file index.blade.php
+        // with : mengambil dari database
         return view('pages.penduduk.index')->with('data', $data);
     }
 
@@ -60,13 +59,15 @@ class WargaPendudukController extends Controller
             'no_hp.required' => 'Nomor HP wajib diisi',
         ]);
 
+
         $warga = new WargaPenduduk();
+        //=====dari field tabel=========ini dari view
         $warga->no_kk = $request->no_kk;
         $warga->nama = $request->nama;
         $warga->alamat = $request->alamat;
         $warga->no_hp = $request->no_hp;
         $warga->save();
-
+        //
         return redirect()->to('warga_penduduk')->with('success', 'Data warga berhasil disimpan');
     }
 

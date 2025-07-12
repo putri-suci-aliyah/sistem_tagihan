@@ -112,7 +112,7 @@
                                         <td>{{$no++}}.</td>
                                         <td>{{$data_tagihan->kode_tagihan}}</td>
                                         <td><input type="number" class="form-control harga_tagihan" name="harga_tagihan[{{$data_tagihan->id}}]" id="harga_tagihan[{{$data_tagihan->id}}]" value="{{$data_tagihan->harga_tagihan}}" readonly></td>
-                                        <td><input type="number" class="form-control qty" name='qty[{{$data_tagihan->id}}]' id="qty{{$data_tagihan->id}}"></td>
+                                        <td><input type="number" class="form-control qty" name='qty[{{$data_tagihan->id}}]' id="qty{{$data_tagihan->id}}" required></td>
                                         <td><input type="number" class="form-control total_bayar" name='total_bayar[{{$data_tagihan->id}}]' id="total_bayar[{{$data_tagihan->id}}]" readonly></td>
                                     </tr>
                                 @else
