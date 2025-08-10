@@ -57,14 +57,14 @@ class TransaksiController extends Controller
 
         try {
             // Kirim pesan via API Twilio
-            $sid    = "xxx"; // SID Twilio
-            $token  = "xxx"; // Token Twilio
+            $sid    = "XXX"; // SID Twilio
+            $token  = "XX"; // Token Twilio
             $twilio = new Client($sid, $token);  // Inisialisasi client Twilio
 
             $message = $twilio->messages
             ->create("whatsapp:".$nomor_internasional, // to
                 array(
-                "from" => "whatsapp:+1xxx",
+                "from" => "whatsapp:+XX",
                 "body" => $pesan,
                 )
             );
