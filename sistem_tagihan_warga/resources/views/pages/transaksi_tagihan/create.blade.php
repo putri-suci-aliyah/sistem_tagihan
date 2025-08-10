@@ -53,6 +53,7 @@
                             <select id="warga_penduduks_id" name="warga_penduduks_id" class="form-control select2" style="width: 100%;">
                                 @foreach ($warga_penduduk as $data_penduduk)
                                     <option value="{{ $data_penduduk->id }}">
+                                        {{-- untuk menampilkan no_kk - nama yang sudah terdaftar di database warga_penduduks --}}
                                         {{ $data_penduduk->no_kk }} - {{ $data_penduduk->nama }}
                                     </option>
                                 @endforeach

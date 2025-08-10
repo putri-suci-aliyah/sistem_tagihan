@@ -53,6 +53,8 @@
                 <div class="col-sm-10">
                     <select id="warga_penduduks_id" name="warga_penduduks_id" class="form-control select2" style="width: 100%;">
                         @foreach ($warga_penduduk as $data_warga)
+                            {{-- Jika $data_warga->id sama dengan $data->warga_penduduks->id, maka akan selected,
+                            kalau tidak, kosong (''). --}}
                             <option value="{{ $data_warga->id }}" {{ $data_warga->id == $data->warga_penduduks->id ? 'selected' : '' }}>
                                 {{ $data_warga->no_kk }} - {{ $data_warga->nama }}
                             </option>

@@ -11,35 +11,44 @@ use Twilio\Rest\Client;
 
 class TransaksiController extends Controller
 {
+    //Method untuk memperbarui status pembayaran menjadi lunas
     public function pelunasan_tagihan(Request $request, $id){
-        $data = Transaksi::where('id', $id)->first();
-        $data->status_pembayaran = "Lunas";
-        $data->save();
+        $data = Transaksi::where('id', $id)->first(); //Ambil data transaksi berdasarkan ID
+        $data->status_pembayaran = "Lunas"; // Ubah status pembayaran jadi Lunas
+        $data->save(); // Simpan perubahan ke database
         return redirect()->to('transaksi')->with('success', 'Data status pembayaran transaksi tagihan warga berhasil diubah');
     }
 
-    //
+    // Method untuk mengirim notifikasi WhatsApp menggunakan Twilio
     public function notifikasi_whatsapp(Request $request, $id)
     {
+        // Ambil transaksi dan relasi ke warga
         $data = Transaksi::where('id', $id)->with('warga_penduduks')->first();
-        $total_pembayaran = 0;
+        $total_pembayaran = 0; // Inisialisasi total pembayaran
+
+        // Hitung total pembayaran berdasarkan qty * harga_tagihan
         foreach ($data->tagihan as $item) {
              $total_pembayaran += $item->pivot->qty * $item->pivot->harga_tagihan;
         };
 
+        // Susun pesan yang akan dikirimkan
         $pesan = "Tagihan an. ". $data->warga_penduduks->nama . " dengan kode transaksi " . $data->kode_transaksi . " sebesar Rp. ". number_format($total_pembayaran);
         $pesan .= "\nDetail Tagihan : \n";
 
+        // Tambahkan detail tagihan satu per satu
         $nomer = 1;
         foreach ($data->tagihan as $item) {
             $pesan .= $nomer++ . ". " .$item->kode_tagihan . " - Rp. ". number_format($item->pivot->qty * $item->pivot->harga_tagihan) . " \n";
         };
 
-        $pesan .= "\nTerimakasih";
+        $pesan .= "\nTerimakasih"; // Tambahkan ucapan penutup
         $notifikasi_wa = "Notifikasi WA ". $data->warga_penduduks->nama;
 
+        // Mengambil nomor dari model WargaPenduduk (atribut: no_hp)
         $nomor = $data->warga_penduduks->no_hp;
+        //mengecek apakahh nomor hp warga diawali dengan angka 0
         if (substr($nomor, 0, 1) === "0") {
+            //jika iya, ubah format nya ke format internasional dgn +62
             $nomor_internasional = "+62" . substr($nomor, 1);
         } else {
             $nomor_internasional = $nomor;
@@ -47,45 +56,35 @@ class TransaksiController extends Controller
 
 
         try {
+            // Kirim pesan via API Twilio
+            $sid    = "xxx"; // SID Twilio
+            $token  = "xxx"; // Token Twilio
+            $twilio = new Client($sid, $token);  // Inisialisasi client Twilio
 
-            $sid    = "AC43f9d58a22c8dc128b735cee53c421ee";
-            $token  = "16d13941a42fe6feccbcb9c79df17169";
-            $twilio = new Client($sid, $token);
-            # 6285295400354
             $message = $twilio->messages
             ->create("whatsapp:".$nomor_internasional, // to
                 array(
-                "from" => "whatsapp:+14155238886",
+                "from" => "whatsapp:+1xxx",
                 "body" => $pesan,
                 )
             );
+            // Jika berhasil, redirect ke halaman rooting transaksi dan tampilkan notifikasi berhasil
             return redirect()->to('transaksi')->with('success', $notifikasi_wa. ' telah terkirim.');
         } catch (\Throwable $th) {
             return redirect()->to('transaksi')->with('failed_whatsapp', $notifikasi_wa . ' gagal terkirim.');
         }
     }
+
+    // Constructor untuk memastikan semua method hanya dapat diakses oleh user yang telah login
     public function __construct()
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     */
+
+    // Menampilkan daftar data transaksi
     public function index(Request $request)
     {
-        // $katakunci = $request->katakunci;
-        // if (strlen($katakunci)) {
-        //     $data = Transaksi::where('kode_transaksi', 'like', "%$katakunci%")
-        //     ->with('warga_penduduks')
-        //     ->orderBy('id', 'desc')
-        //     ->paginate(10);
-        // } else {
-        //    $data = Transaksi::with('warga_penduduks')
-        //     ->orderBy('id', 'desc')
-        //     ->paginate(10);
-        // }
-        // return view('pages.transaksi_tagihan.index')->with('data', $data);
-
+        // Jika ada kata kunci pencarian, lakukan filter
         $katakunci = $request->katakunci;
         if (strlen($katakunci)) {
             $data = Transaksi::where('kode_transaksi','like',"%$katakunci%")
@@ -96,35 +95,37 @@ class TransaksiController extends Controller
         } else {
             $data = Transaksi::orderBy('id','desc')->paginate(10);
         }
-        // return view akan memanggil dari folder pages>penduduk dari file index.blade.php
-        // with : mengambil dari database
+        // return view akan memanggil dari folder pages>transaksi dari file index.blade.php
+        // with('data', $data) digunakan untuk mengirimkan data dari controller ke view dengan nama variabel 'data'
         return view('pages.transaksi_tagihan.index')->with('data', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Menampilkan form untuk membuat data transaksi baru
     public function create()
     {
-        $warga_penduduk = WargaPenduduk::all();
-        $tagihan = Tagihan::all();
+        $warga_penduduk = WargaPenduduk::all(); // Ambil semua data warga
+        $tagihan = Tagihan::all(); // Ambil semua jenis tagihan
+        // kedua variabel ini dikirimkan ke view agar bisa digunakan di dalam file create.blade.php
         return view('pages.transaksi_tagihan.create',compact('warga_penduduk','tagihan'));
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Menyimpan data transaksi baru
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
+            //exists: data yang diisi harus ada di tabel warga_penduduks kolom id
             'warga_penduduks_id' => 'required|exists:warga_penduduks,id',
             'periode_bulan' => 'required',
+            //tahun tagihan harus diisi dan harus berupa angka (misal: 2025).
             'periode_tahun' => 'required|integer',
+            // Validasi ini memastikan bahwa warga tidak bisa dimasukkan tagihan dua kali untuk bulan dan tahun yang sama.
             'periode_bulan' => [
                 'required',
                 Rule::unique('transaksis')
                     ->where(function ($query) use ($request) {
+                        //tidak ada duplikat data tagihan untuk warga yang sama, bulan yang sama, dan tahun yang sama.
                         return $query->where('warga_penduduks_id', $request->warga_penduduks_id)
                                     ->where('periode_tahun', $request->periode_tahun)
                                     ->where('periode_bulan', $request->periode_bulan);
@@ -133,6 +134,7 @@ class TransaksiController extends Controller
         ], [
             'periode_bulan.unique' => 'Tagihan untuk warga ini pada periode tersebut sudah ada.',
         ]);
+        // Buat objek baru dari model Transaksi dan simpan ke dalam variabel $transaksi.
         $transaksi = new Transaksi();
         $transaksi->kode_transaksi = "TAG/".time();
         $transaksi->warga_penduduks_id = $request->warga_penduduks_id;
@@ -174,13 +176,10 @@ class TransaksiController extends Controller
     {
         $data = $transaksi;
         $warga_penduduk = WargaPenduduk::all();
-        # return view('pages.transaksi_tagihan.edit')->with('data', $data);
         return view('pages.transaksi_tagihan.edit',compact('data','warga_penduduk'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, Transaksi $transaksi)
     {
         $request->validate([
@@ -202,6 +201,7 @@ class TransaksiController extends Controller
         $harga_tagihan = $request->input('harga_tagihan'); // [id => harga]
         $qty = $request->input('qty'); // [id => qty]
 
+        //array kosong untuk menyimpan data tagihan yang akan disinkronkan ke tabel pivot tagihan_transaksi.
         $syncData = [];
 
         foreach ($qty as $tagihan_id => $jumlah) {
@@ -212,8 +212,6 @@ class TransaksiController extends Controller
                 ];
             }
         }
-
-
 
         $transaksi->warga_penduduks_id = $request->warga_penduduks_id;
         $transaksi->periode_bulan = $request->periode_bulan;

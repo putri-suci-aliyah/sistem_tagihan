@@ -22,6 +22,7 @@
     <div class="login-logo">
       <a href="">UrPay</a>
     </div>
+    {{-- menampilkan pesan error validasi start --}}
     @if (count($errors))
     <div class="pt.3">
         <div class="alert alert-danger">
@@ -31,6 +32,9 @@
         </div>
     </div>
     @endif
+    {{-- menampilkan pesan error validasi end --}}
+
+
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">

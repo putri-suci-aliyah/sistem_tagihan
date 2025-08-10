@@ -61,13 +61,12 @@ class WargaPendudukController extends Controller
 
 
         $warga = new WargaPenduduk();
-        //=====dari field tabel=========ini dari view
+        //===dari field/kolom di tabel======ini dari view
         $warga->no_kk = $request->no_kk;
         $warga->nama = $request->nama;
         $warga->alamat = $request->alamat;
         $warga->no_hp = $request->no_hp;
         $warga->save();
-        //
         return redirect()->to('warga_penduduk')->with('success', 'Data warga berhasil disimpan');
     }
 
@@ -106,7 +105,7 @@ class WargaPendudukController extends Controller
         $wargaPenduduk->nama = $request->nama;
         $wargaPenduduk->alamat = $request->alamat;
         $wargaPenduduk->no_hp = $request->no_hp;
-        $wargaPenduduk->save(); //UPDATE faculties SET ....
+        $wargaPenduduk->save(); //UPDATE warga_penduduks SET ....
 
         return redirect()->to('warga_penduduk')->with('success', 'Data penduduk berhasil diubah');
 

@@ -38,6 +38,7 @@
             <div class="mb-3 row">
                 <label for="nim" class="col-sm-2 col-form-label">No. KK</label>
                 <div class="col-sm-10">
+                    {{-- Ini bagian yang menampilkan data no_kk dari objek $data --}}
                     {{$data->no_kk}}
                 </div>
             </div>
