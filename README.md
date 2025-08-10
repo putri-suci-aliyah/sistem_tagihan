@@ -1,5 +1,6 @@
 # sistem_tagihan
 Sistem Tagihan Warga
+Aplikasi ini menggunakan Laravel 10, Database MySQL, Template AdminLTE
 
 Login
 ![alt text](https://github.com/putri-suci-aliyah/sistem_tagihan/blob/main/img/LOGIN.png?raw=true)
