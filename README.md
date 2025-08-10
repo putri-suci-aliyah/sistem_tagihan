@@ -1,4 +1,4 @@
-# sistem_tagihan
+# Sistem Tagihan Warga
 Sistem Tagihan Warga
 Aplikasi ini menggunakan Laravel 10, Database MySQL, Template AdminLTE dan Notifikasi WhatsApp menggunakan Twillio
 
